@@ -19,6 +19,7 @@ describe('Obfuscator mixin', () => {
     User = memory.createModel(
       'User',
       {
+        address: 'string',
         email: { type: 'string', required: true, obfuscated: true },
         firstName: { type: 'string', obfuscated: true },
         language: 'string',
@@ -37,6 +38,7 @@ describe('Obfuscator mixin', () => {
     UserWithMixinProperties = memory.createModel(
       'UserWithMixinProperties',
       {
+        address: 'string',
         email: { type: 'string', required: true },
         firstName: { type: 'string' },
         language: 'string',
@@ -239,6 +241,30 @@ describe('Obfuscator mixin', () => {
       });
       expect(instance).toBeTruthy();
       expect(instance.id).toEqual(user.id);
+    });
+
+    test('keep non obfuscated properties conditions on where', async () => {
+      await User.create({
+        address: faker.address.streetAddress(),
+        email: faker.internet.email(),
+        language: faker.random.word(),
+      });
+
+      const data = {
+        address: faker.address.streetAddress(),
+        email: faker.internet.email(),
+        language: faker.random.word(),
+      };
+      const user = await User.create(data);
+      expect(user.id).toBeDefined();
+      const users = await User.find({
+        where: {
+          address: data.address,
+          language: data.language,
+        },
+      });
+      expect(users).toHaveLength(1);
+      expect(users[0].id).toEqual(user.id);
     });
   });
 });

@@ -74,13 +74,12 @@ export = (Model: any, options?: any) => {
     const result: any = {};
     for (const key of Object.keys(where)) {
       const cond = where[key];
+      result[key] = cond;
       if (LOGICAL_OPERATORS.includes(key)) {
         if (Array.isArray(cond)) {
           result[key] = cond.map(c => buildWhere(c));
         }
-      }
-      if (Model._obfuscatedProperties.includes(key)) {
-        // tslint:disable-next-line:prefer-conditional-expression
+      } else if (Model._obfuscatedProperties.includes(key)) {
         if (typeof cond === 'string') {
           result[key] = Model._obfuscate(cond);
         } else if (cond !== null && typeof cond === 'object') {
@@ -102,8 +101,6 @@ export = (Model: any, options?: any) => {
             // tslint:enable:no-console
           }
           result[key] = resultOp;
-        } else {
-          result[key] = cond;
         }
       }
     }
