@@ -1,6 +1,6 @@
 {
   "name": "@digitalgarage/loopback-obfuscator-mixin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Loopback obfuscator mixin",
   "license": "MIT",
   "repository": "https://github.com/digital-garage-to/loopback-obfuscator-mixin",
