@@ -27,7 +27,7 @@ Usage
 
 Any property that is set as obfuscated will be obfuscated and deobfuscated properly any time you use any `PersistedModel` method
 
-Keep in mind that if you obfuscate any foreign key you can't directly use include filters, you will need to use 2 separated queries
+__Keep in mind that if you obfuscate any foreign key you can't directly use include filters, you will need to use 2 separated queries__
 
 Mixin Sources
 ==============
